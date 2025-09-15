@@ -1,0 +1,33 @@
+# Ignore Python cache and environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env/
+venv/
+
+# Ignore large model weights and data (but keep the specific model we need)
+data/
+*.h5
+# Allow our specific model file
+!models/pneumonia_classifier_final_model.keras
+# But ignore other models
+models/*.h5
+models/*.pb
+models/saved_model/
+
+# Ignore Streamlit config
+.streamlit/
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
