@@ -2,8 +2,13 @@
 REM Quick Start Script for Pneumonia Detection Project
 REM Creates venv, installs requirements, and runs Streamlit app
 
-python -m venv .env
-call .env\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
-streamlit run app\app.py
+echo Creating virtual environment...
+python3 -m venv .env
+echo Activating virtual environment...
+call .env\Scripts\activate.bat
+echo Upgrading pip...
+python -m pip install --upgrade pip
+echo Installing requirements...
+python -m pip install -r requirements.txt
+echo Starting Streamlit app...
+python -m streamlit run app\app_modern.py
