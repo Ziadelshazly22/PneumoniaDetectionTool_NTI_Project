@@ -5,10 +5,15 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+try:
+    from tensorflow import keras
+except ImportError:
+    import keras
 from streamlit_option_menu import option_menu
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import io
+import os
 
 # Set page config for icon and title
 st.set_page_config(
@@ -88,9 +93,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load model (update path as needed)
-MODEL_PATH = '../models/pneumonia_classifier_final_model.keras'
+import os
+MODEL_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', 'pneumonia_classifier_final_model.keras')
 try:
-    model = tf.keras.models.load_model(MODEL_PATH)
+    model = keras.models.load_model(MODEL_PATH)
 except Exception as e:
     st.error(f"Model loading error: {e}")
     st.stop()
@@ -242,7 +248,7 @@ def create_confidence_gauge(confidence):
 
 def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None):
     """Generate GradCAM heatmap"""
-    grad_model = tf.keras.models.Model(
+    grad_model = keras.models.Model(
         [model.inputs], [model.get_layer(last_conv_layer_name).output, model.output]
     )
     with tf.GradientTape() as tape:
@@ -370,7 +376,7 @@ elif selected == f"🔥 {TXT['gradcam']}":
         # Find last conv layer name
         last_conv_layer_name = None
         for layer in reversed(model.layers):
-            if isinstance(layer, tf.keras.layers.Conv2D):
+            if isinstance(layer, keras.layers.Conv2D):
                 last_conv_layer_name = layer.name
                 break
         
